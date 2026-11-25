@@ -75,7 +75,12 @@ function App() {
     function editar(incidente: Incidente) {
         setFormulario({
             ...incidente,
-            fecha: incidente.fecha.slice(0, 16)
+            fecha: new Date(incidente.fecha)
+    .toLocaleString('sv-SE', {
+        timeZone: 'America/Santo_Domingo'
+    })
+    .replace(' ', 'T')
+    .slice(0, 16)
         });
 
         setMensaje('');
@@ -126,7 +131,7 @@ function exportarCSV() {
             i.tipo,
             i.descripcion,
             i.ubicacion,
-            i.fecha,
+            formatearFecha(i.fecha),
             i.duracion,
             i.estado
         ])
@@ -158,8 +163,21 @@ function exportarCSV() {
 
     URL.revokeObjectURL(url);
 }
-    return (
-        <div className="aplicacion">
+
+function formatearFecha(fecha: string) {
+    return new Date(fecha).toLocaleString('es-DO', {
+        timeZone: 'America/Santo_Domingo',
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true
+    });
+}
+
+return (
+    <div className="aplicacion">
 
             <header className="encabezado">
                 <div className="marca">
@@ -442,6 +460,7 @@ function exportarCSV() {
                                     <th>ID</th>
                                     <th>Tipo</th>
                                     <th>Ubicación</th>
+                                    <th>Fecha y hora</th>
                                     <th>Duración</th>
                                     <th>Estado</th>
                                     <th>Acciones</th>
@@ -455,6 +474,7 @@ function exportarCSV() {
                                         <td>#{incidente.id}</td>
                                         <td>{incidente.tipo}</td>
                                         <td>{incidente.ubicacion}</td>
+                                        <td>{formatearFecha(incidente.fecha)}</td>
                                         <td>{incidente.duracion} min</td>
 
                                         <td>
