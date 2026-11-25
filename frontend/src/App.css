@@ -361,3 +361,19 @@ footer {
     border-top: 1px solid #334155;
     margin: 20px 0;
 }
+
+.filtros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.filtros select {
+    flex: 1;
+    min-width: 180px;
+}
+
+.filtros button {
+    white-space: nowrap;
+}
