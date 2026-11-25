@@ -116,7 +116,48 @@ const resultados = incidentes.filter(i =>
     (filtroEstado === '' || i.estado === filtroEstado) &&
     (filtroTipo === '' || i.tipo === filtroTipo)
 );
+function exportarCSV() {
+    const filas = [
+        ['ID', 'Tipo', 'Descripcion', 'Ubicacion',
+         'Fecha', 'Duracion', 'Estado'],
 
+        ...resultados.map(i => [
+            i.id,
+            i.tipo,
+            i.descripcion,
+            i.ubicacion,
+            i.fecha,
+            i.duracion,
+            i.estado
+        ])
+    ];
+
+    const contenido = filas.map(fila =>
+        fila.map(valor => {
+            let texto = String(valor ?? '');
+
+            if (/^\s*[=+\-@]/.test(texto)) {
+                texto = "'" + texto;
+            }
+
+            return '"' + texto.replace(/"/g, '""') + '"';
+        }).join(',')
+    ).join('\r\n');
+
+    const archivo = new Blob(
+        ['\uFEFF', contenido],
+        { type: 'text/csv;charset=utf-8;' }
+    );
+
+    const url = URL.createObjectURL(archivo);
+    const enlace = document.createElement('a');
+
+    enlace.href = url;
+    enlace.download = 'incidentes-voltguardian.csv';
+    enlace.click();
+
+    URL.revokeObjectURL(url);
+}
     return (
         <div className="aplicacion">
 
@@ -335,6 +376,13 @@ const resultados = incidentes.filter(i =>
                     <div className="cabecera-tabla">
 
                         <h2>Historial de incidentes</h2>
+
+                        <button
+    className="boton-principal"
+    onClick={exportarCSV}
+>
+    Descargar CSV
+</button>
 
                         <div className="buscador">
                             <Search size={18} />
