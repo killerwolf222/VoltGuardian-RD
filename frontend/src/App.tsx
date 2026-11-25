@@ -1,6 +1,7 @@
 
 import { useEffect, useState } from 'react';
 import type { FormEvent } from 'react';
+import Equipos from './components/Equipos';
 
 import {
     Zap, Plus, Pencil, Trash2,
@@ -33,6 +34,7 @@ function App() {
     const [busqueda, setBusqueda] = useState('');
     const [mensaje, setMensaje] = useState('');
     const [error, setError] = useState('');
+    const [modulo, setModulo] = useState('incidentes');
 
     async function cargarIncidentes() {
         try {
@@ -127,7 +129,29 @@ function App() {
                 </div>
             </header>
 
-            <main className="contenido">
+           <main className="contenido">
+
+    <nav className="navegacion">
+        <button
+            className={modulo === 'incidentes' ? 'activo' : ''}
+            onClick={() => setModulo('incidentes')}
+        >
+            Incidentes eléctricos
+        </button>
+
+        <button
+            className={modulo === 'equipos' ? 'activo' : ''}
+            onClick={() => setModulo('equipos')}
+        >
+            Mis equipos
+        </button>
+    </nav>
+
+    {modulo === 'equipos' && <Equipos />}
+
+    {modulo === 'incidentes' && (
+        <>
+              
 
                 <section className="bienvenida">
                     <span className="etiqueta">
@@ -394,7 +418,10 @@ function App() {
 
                     </div>
 
-                </section>
+                                </section>
+
+            </>
+        )}
 
                 <footer>
                     VoltGuardian RD — Gestión eléctrica doméstica
