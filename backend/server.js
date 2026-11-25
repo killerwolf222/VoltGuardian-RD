@@ -1,7 +1,9 @@
 const express = require('express');
 const cors = require('cors');
 const db = require('./config/db');
+
 const incidentesRoutes = require('./routes/incidentesRoutes');
+const equiposRoutes = require('./routes/equiposRoutes');
 
 require('dotenv').config();
 
@@ -10,6 +12,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use('/api/incidentes', incidentesRoutes);
+app.use('/api/equipos', equiposRoutes);
 
 app.get('/', (req, res) => {
     res.json({
