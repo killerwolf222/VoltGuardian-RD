@@ -302,3 +302,62 @@ footer {
         padding: 18px;
     }
 }
+
+
+.navegacion {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #334155;
+}
+
+.navegacion button {
+    background: #172033;
+    color: #94a3b8;
+    padding: 12px 20px;
+}
+
+.navegacion button.activo {
+    background: #facc15;
+    color: #111827;
+    font-weight: bold;
+}
+
+.equipos-estadisticas {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.equipos-estadisticas h2 {
+    font-size: 24px;
+}
+
+.equipos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.equipo-card {
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 14px;
+    padding: 22px;
+}
+
+.equipo-card p {
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+.equipo-precio {
+    color: #facc15;
+    font-size: 24px;
+}
+
+.equipo-card hr {
+    border: none;
+    border-top: 1px solid #334155;
+    margin: 20px 0;
+}
