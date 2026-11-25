@@ -32,6 +32,8 @@ function App() {
     const [incidentes, setIncidentes] = useState<Incidente[]>([]);
     const [formulario, setFormulario] = useState(formularioInicial);
     const [busqueda, setBusqueda] = useState('');
+    const [filtroEstado, setFiltroEstado] = useState('');
+    const [filtroTipo, setFiltroTipo] = useState(''); 
     const [mensaje, setMensaje] = useState('');
     const [error, setError] = useState('');
     const [modulo, setModulo] = useState('incidentes');
@@ -107,11 +109,13 @@ function App() {
         i => i.estado === 'Resuelto'
     ).length;
 
-    const resultados = incidentes.filter(i =>
-        `${i.tipo} ${i.ubicacion} ${i.descripcion} ${i.estado}`
-            .toLowerCase()
-            .includes(busqueda.toLowerCase())
-    );
+const resultados = incidentes.filter(i =>
+    `${i.tipo} ${i.ubicacion} ${i.descripcion} ${i.estado}`
+        .toLowerCase()
+        .includes(busqueda.toLowerCase()) &&
+    (filtroEstado === '' || i.estado === filtroEstado) &&
+    (filtroTipo === '' || i.tipo === filtroTipo)
+);
 
     return (
         <div className="aplicacion">
@@ -345,7 +349,42 @@ function App() {
                         </div>
 
                     </div>
+<div className="filtros">
 
+    <select
+        value={filtroEstado}
+        onChange={e => setFiltroEstado(e.target.value)}
+    >
+        <option value="">Todos los estados</option>
+        <option>Pendiente</option>
+        <option>En revisión</option>
+        <option>Resuelto</option>
+    </select>
+
+    <select
+        value={filtroTipo}
+        onChange={e => setFiltroTipo(e.target.value)}
+    >
+        <option value="">Todos los tipos</option>
+        <option>Apagón eléctrico</option>
+        <option>Fluctuación de voltaje</option>
+        <option>Sobretensión</option>
+        <option>Bajo voltaje</option>
+        <option>Otro</option>
+    </select>
+
+    <button
+        className="boton-secundario"
+        onClick={() => {
+            setFiltroEstado('');
+            setFiltroTipo('');
+            setBusqueda('');
+        }}
+    >
+        Limpiar filtros
+    </button>
+
+</div>
                     <div className="tabla-contenedor">
 
                         <table>
